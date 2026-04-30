@@ -1,20 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
     <head>
         <title>Task Tracker</title>
+
+        <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+        <script src="{% static 'js/main.js' %}"></script>
     </head>
     <body>
         <h1>Task list</h1>
 
-        {% for member in members %}
-            <p> {{ member }}</p>
+        {% for task in task_list %}
+            <div id="task-{{ task.id }}">
+                <p>{{ task.task_name }}</p>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.id }}">
+                    <button type="submit" name="delete_task">Delete</button>
+                </form>
+            </div>
         {% endfor %}
 
         <h2>add task</h2>
-        <form method="POST">
+        <form method="POST" id="js-create-task-form" data-create-task="{% url 'main' %}">
             {% csrf_token %}
-            {{ member_form }}
-            <button type="submit">submit</button>
+            {{ form }}
+            <button type="submit" id="js-create-task-btn">submit</button>
         </form>
         
 

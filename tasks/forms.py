@@ -1,7 +1,10 @@
 from django import forms
 from . import models
 
-class MemberForm(forms.ModelForm):
+class TaskForm(forms.ModelForm):
     class Meta:
-        model = models.Member
-        fields = ['first_name', 'last_name', 'email', 'password']
+        model = models.task
+        fields = ['task_name']
+        widgets = {
+            'task_name': forms.TextInput(attrs={'id': 'task-create-form'})
+        }
