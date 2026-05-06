@@ -10,17 +10,19 @@
     <body>
         <h1>Task list</h1>
 
-        {% for task in task_list %}
-            <div id="task-{{ task.id }}">
-                <p>{{ task.task_name }}</p>
+        <div id="task-list">
+            {% for task in task_list %}
+                <div id="task-{{ task.id }}">
+                    <p>{{ task.task_name }}</p>
 
-                <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="task_id" value="{{ task.id }}">
-                    <button type="submit" name="delete_task">Delete</button>
-                </form>
-            </div>
-        {% endfor %}
+                    <form method="POST" class="js-delete-task-form" data-delete-task="{% url 'main' %}">
+                        {% csrf_token %}
+                        <input type="hidden" class="js-task-id" value="{{ task.id }}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>  
 
         <h2>add task</h2>
         <form method="POST" id="js-create-task-form" data-create-task="{% url 'main' %}">
